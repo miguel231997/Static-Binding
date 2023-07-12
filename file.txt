@@ -1,0 +1,27 @@
+Late Static Binding is a feature in PHP that allows a static method in a subclass to reference the static context of its parent class. It provides a way to access static properties and methods from the context of the subclass, even if they are overriden
+
+in PHP when a static method is called in a subclass, the context (i.e the self keyword) refers to the subclass itself, not the parent class. This means that if the parent class has static properties or methods, the subclass cannot directly access or override them.
+
+However, with Late Static Binding, you can use the static keyword to reference the parent class within the subclass. This allows you to access and ovveride static properties and methods defined in the parent class. It ensures that the static context within the subclass is correctly resolved to the parent class, even if the method is called from the subclass. 
+
+Late Static binding is achieved by using the static:: keyword instead of self:: in the subclass. By using static:: the PHP interpreter determined the correct context dynamically based on the actual class calling method.
+
+Heres an example:
+
+class ParentClass {
+    public static function greeting() {
+        echo "Hello from ParentClass!";
+    }
+
+    public static function invokeGreeting() {
+        static::greeting();
+    }
+}
+
+class ChildClass extends ParentClass {
+    public static function greeting() {
+        echo "Hello from ChildClass!";
+    }
+}
+
+ChildClass::invokeGreeting(); // Output: "Hello from ChildClass!"
